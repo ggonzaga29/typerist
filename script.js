@@ -86,8 +86,8 @@ function init() {
 	renderText(currentSource);
 	clearInterval(timer);
 	wpmText.textContent = "00";
-    wpmLi.classList.remove("animate__tada");
-    accText.textContent = "00";
+	wpmLi.classList.remove("animate__tada");
+	accText.textContent = "00";
 
 	timer = null;
 	testOngoing = false;
@@ -250,8 +250,8 @@ wordInput.addEventListener("keypress", (event) => {
 				console.log(allWordsStr, allLettersTyped);
 				clearInterval(timer);
 				wpmText.textContent = wpm();
-                wpmLi.classList.add("animate__tada");
-                accText.textContent = accuracy();
+				wpmLi.classList.add("animate__tada");
+				accText.textContent = accuracy();
 			}
 		}
 	}
@@ -266,15 +266,15 @@ function netWpm(text, time) {
 }
 
 function cpm() {
-    return (allLettersTyped.length / curTime) * 60;
+	return (allLettersTyped.length / curTime) * 60;
 }
 
 function wpm() {
-    return Math.round((((allLettersTyped / 5) / curTime) * 60));
+	return Math.round((allLettersTyped.length / 5 / curTime) * 60);
 }
 
 function accuracy() {
-    return Math.trunc((allWordsStr.length / allLettersTyped.length) * 100);
+	return Math.trunc((allWordsStr.length / allLettersTyped.length) * 100);
 }
 
 // Highlight current word
@@ -303,11 +303,11 @@ setInterval(() => {
 	if (wordInput.value === "") {
 		wordInput.classList.remove("error");
 		typed = "";
-    }
-    
-    if (wordInput.value === " ") {
-        wordInput.value = "";
-    }
+	}
+
+	if (wordInput.value === " ") {
+		wordInput.value = "";
+	}
 
 	if (curWord) {
 		typed = wordInput.value;
@@ -339,3 +339,11 @@ setInterval(() => {
 		}
 	}
 }, 1);
+
+if (
+	/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+		navigator.userAgent
+	)
+) {
+	alert('Sorry, this app is not yet optimized for mobile. :(');
+}
