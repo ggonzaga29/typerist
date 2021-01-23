@@ -249,7 +249,7 @@ wordInput.addEventListener("keypress", (event) => {
 				wordInput.disabled = true;
 				console.log(allWordsStr, allLettersTyped);
 				clearInterval(timer);
-				wpmText.textContent = netWpm(allLettersTyped, curTime);
+				wpmText.textContent = wpm();
                 wpmLi.classList.add("animate__tada");
                 accText.textContent = accuracy();
 			}
@@ -263,6 +263,14 @@ function netWpm(text, time) {
 	const uncorrected = uncorrectedErrors.length;
 
 	return Math.trunc((gross - uncorrected) / timeMinutes);
+}
+
+function cpm() {
+    return (allLettersTyped.length / curTime) * 60;
+}
+
+function wpm() {
+    return Math.round((((allLettersTyped / 5) / curTime) * 60));
 }
 
 function accuracy() {
