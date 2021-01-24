@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="css/style.css" class="" />
 		<link
 			rel="icon"
 			type="image/png"
@@ -14,24 +14,31 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
 		/>
-		<script src="script.js" defer></script>
+		<script src="js/script.js" defer></script>
 		<title>Typerist</title>
 	</head>
 	<body class="">
 		<div class="wrapper">
 			<!-- CONTENT WRAPPER -->
+
 			<div class="stats-wrapper">
+				<div class="max-word-wrapper">
+					<ul class="max-word-list text-correct">
+                        
+                    </ul>
+				</div>
+
 				<div class="wpm-acc text-correct animate__animated">
 					<ul>
-						<li class="wpm  ">
-							WPM <span class="wpm-text text-main ">00</span>
+						<li class="wpm">
+							WPM <span class="wpm-text text-main">00</span>
 						</li>
 						<li class="acc">
 							ACC <span class="acc-text text-main">00</span>
 						</li>
 					</ul>
 				</div>
-			</div>
+            </div>
 			<div class="quote-wrapper">
 				<p class="quote" id="quote"></p>
 			</div>

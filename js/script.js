@@ -6,6 +6,7 @@ const wordInput = document.getElementById("word-input");
 const wpmText = document.querySelector(".wpm-text");
 const wpmLi = document.querySelector(".wpm-acc");
 const accText = document.querySelector(".acc-text");
+const maxWordSelect = document.querySelector(".max-word-list");
 
 wordInput.focus();
 
@@ -15,6 +16,32 @@ let allLettersTyped = "";
 let testOngoing = false;
 let uncorrectedErrors = [];
 let errors = 0;
+let maxWords = 50;
+let curMax;
+
+
+const testLengths = [10, 25, 50, 100, 150];
+
+// Render test lengths selection
+testLengths.forEach((value) => {
+	const HTMLstr = `<li class="max-${value}" onclick="setMaxWords(${value})"><span>${value}</span></li>`;
+	// maxWordSelect.insertAdjacentHTML('afterbegin', HTMLstr);
+	maxWordSelect.innerHTML += HTMLstr;
+	console.log(HTMLstr);
+});
+
+curMax = document.querySelector(`.max-${maxWords}`);
+curMax.classList.add("current-max");
+
+function setMaxWords(num) {
+	curMax = document.querySelector(`.max-${maxWords}`);
+	curMax.classList.remove("current-max");
+	const toNum = Number(num);
+	maxWords = toNum;
+	curMax = document.querySelector(`.max-${maxWords}`);
+	curMax.classList.add("current-max");
+	init();
+}
 
 const textColorClasses = {
 	correct: "text-next",
@@ -65,7 +92,6 @@ function renderEnglish() {
 		let wordArr = data.text;
 
 		let total = 1;
-		let maxWords = 50;
 		let finalWordArr = [];
 
 		for (let i = 0; i < wordArr.length; i++) {
@@ -345,5 +371,5 @@ if (
 		navigator.userAgent
 	)
 ) {
-	alert('Sorry, this app is not yet optimized for mobile. :(');
+	alert("Sorry, this app is not yet optimized for mobile. :(");
 }
