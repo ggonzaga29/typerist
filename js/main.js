@@ -7,6 +7,8 @@ const wpmText = document.querySelector(".wpm-text");
 const wpmLi = document.querySelector(".wpm-acc");
 const accText = document.querySelector(".acc-text");
 const maxWordSelect = document.querySelector(".max-word-list");
+const themeBtn = document.querySelector('.theme-btn');
+const closeBtn = document.querySelector('.close');
 
 wordInput.focus();
 
@@ -19,8 +21,8 @@ let errors = 0;
 let maxWords = 50;
 let curMax;
 
-
-const testLengths = [10, 25, 50, 100, 150];
+const testLengths = [10, 25, 50, 75, 100, 125];
+const themes = ["default", "250388"];
 
 // Render test lengths selection
 testLengths.forEach((value) => {
@@ -29,6 +31,14 @@ testLengths.forEach((value) => {
 	maxWordSelect.innerHTML += HTMLstr;
 	console.log(HTMLstr);
 });
+
+if (
+	/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+		navigator.userAgent
+	)
+) {
+	alert("Sorry, this app is not yet optimized for mobile. :(");
+}
 
 curMax = document.querySelector(`.max-${maxWords}`);
 curMax.classList.add("current-max");
@@ -112,7 +122,8 @@ function init() {
 	renderText(currentSource);
 	clearInterval(timer);
 	wpmText.textContent = "00";
-	wpmLi.classList.remove("animate__tada");
+    wpmLi.classList.remove("animate__tada");
+    wpmLi.classList.remove("text-next");
 	accText.textContent = "00";
 
 	timer = null;
@@ -169,7 +180,7 @@ function renderToHTML(arr) {
 	}
 
 	wordElements = wordList.map((word, i) => {
-		return `<span class="word-${i} transition duration-75 ease-in-out">${word}</span>`;
+		return `<span class="word-${i}">${word}</span>`;
 	});
 
 	wordList.forEach((word) => {
@@ -277,6 +288,7 @@ wordInput.addEventListener("keypress", (event) => {
 				clearInterval(timer);
 				wpmText.textContent = wpm();
 				wpmLi.classList.add("animate__tada");
+				wpmLi.classList.add("text-next");
 				accText.textContent = accuracy();
 			}
 		}
@@ -296,7 +308,7 @@ function cpm() {
 }
 
 function wpm() {
-	return Math.round((allLettersTyped.length / 5 / curTime) * 60);
+	return Math.round(((allLettersTyped.length / 5) / curTime) * 60);
 }
 
 function accuracy() {
@@ -366,10 +378,14 @@ setInterval(() => {
 	}
 }, 1);
 
-if (
-	/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-		navigator.userAgent
-	)
-) {
-	alert("Sorry, this app is not yet optimized for mobile. :(");
-}
+themeBtn.addEventListener("click", () => {
+    const footer = document.querySelector('.theme-select');
+    footer.classList.toggle("theme-select-open")
+    closeBtn.classList.toggle("close-open");
+});
+
+closeBtn.addEventListener("click", () => {
+    const footer = document.querySelector('.theme-select');
+    footer.classList.remove("theme-select-open")
+    closeBtn.classList.remove("close-open");
+});

@@ -5,6 +5,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="css/style.css" class="" />
 		<link
+			rel="stylesheet"
+			href="themes/253088/253088.css"
+			class="theme-css"
+		/>
+		<link
 			rel="icon"
 			type="image/png"
 			sizes="32x32"
@@ -14,18 +19,39 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
 		/>
-		<script src="js/script.js" defer></script>
+		<script src="js/main.js" defer></script>
 		<title>Typerist</title>
 	</head>
 	<body class="">
 		<div class="wrapper">
 			<!-- CONTENT WRAPPER -->
-
+			<nav class="nav">
+				<div class="title-wrapper">
+					<h1 class="title"><a href="/">Typerist</a></h1>
+				</div>
+				<div class="theme-wrapper">
+					<p href="#" class="theme-btn">
+						<span>Themes</span
+						><svg
+							class="theme-icon"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+							></path>
+						</svg>
+					</p>
+				</div>
+			</nav>
 			<div class="stats-wrapper">
 				<div class="max-word-wrapper">
-					<ul class="max-word-list text-correct">
-                        
-                    </ul>
+					<ul class="max-word-list text-correct"></ul>
 				</div>
 
 				<div class="wpm-acc text-correct animate__animated">
@@ -38,7 +64,7 @@
 						</li>
 					</ul>
 				</div>
-            </div>
+			</div>
 			<div class="quote-wrapper">
 				<p class="quote" id="quote"></p>
 			</div>
@@ -49,7 +75,6 @@
 						class="word-input"
 						id="word-input"
 						autocomplete="off"
-						placeholder=""
 					/>
 					<!-- <span class="highlight"></span>
 					<span class="bar"></span> -->
@@ -73,6 +98,45 @@
 						<!-- <span>Refresh</span> -->
 					</span>
 				</button>
+			</div>
+		</div>
+
+		<div class="close">
+			<svg
+				class="close-icon"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M6 18L18 6M6 6l12 12"
+				></path>
+			</svg>
+		</div>
+		<div class="theme-select">
+			<div class="img-wrapper">
+				<img src="/themes/253088/253088-pallete.png" alt="" />
+				<span>253088</span>
+			</div>
+			<div class="img-wrapper">
+				<img src="/themes/253088/253088-pallete.png" alt="" />
+				<span>253088</span>
+			</div>
+			<div class="img-wrapper">
+				<img src="/themes/253088/253088-pallete.png" alt="" />
+				<span>253088</span>
+			</div>
+			<div class="img-wrapper">
+				<img src="/themes/253088/253088-pallete.png" alt="" />
+				<span>253088</span>
+			</div>
+			<div class="img-wrapper">
+				<img src="/themes/253088/253088-pallete.png" alt="" />
+				<span>253088</span>
 			</div>
 		</div>
 	</body>
