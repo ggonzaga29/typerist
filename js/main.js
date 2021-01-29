@@ -10,7 +10,7 @@ const maxWordSelect = document.querySelector(".max-word-list");
 const themeBtn = document.querySelector(".theme-btn");
 const closeBtn = document.querySelector(".close");
 const footer = document.querySelector(".theme-select");
-const loader = document.querySelector('.lds-dual-ring');
+const loader = document.querySelector(".lds-dual-ring");
 
 wordInput.focus();
 
@@ -92,8 +92,8 @@ async function getEnglishWords() {
 }
 
 function renderEnglish() {
-    quoteElement.innerHTML = "";
-    loader.classList.add("loader-show");
+	quoteElement.innerHTML = "";
+	loader.classList.add("loader-show");
 	getEnglishWords().then((data) => {
 		let wordArr = data.text;
 
@@ -110,8 +110,8 @@ function renderEnglish() {
 			total++;
 		}
 
-        renderToHTML(finalWordArr);
-        loader.classList.remove("loader-show");
+		renderToHTML(finalWordArr);
+		loader.classList.remove("loader-show");
 	});
 }
 
@@ -385,22 +385,29 @@ themes.forEach((theme) => {
     </div>`;
 });
 
+async function fetchTheme(theme) {
+	let response = await fetch(`themes/${theme}/${theme}.css`);
+	return response;
+}
+
 function changeTheme(theme) {
-	if (theme !== currentTheme) {
-		document.querySelector(".theme-css").remove();
+	fetchTheme(theme).then(() => {
+		if (theme !== currentTheme) {
+			document.querySelector(".theme-css").remove();
 
-		const head = document.head;
-		const link = document.createElement("link");
+			const head = document.head;
+			const link = document.createElement("link");
 
-		link.type = "text/css";
-		link.rel = "stylesheet";
-		link.href = `themes/${theme}/${theme}.css`;
-		link.classList.add("theme-css");
+			link.type = "text/css";
+			link.rel = "stylesheet";
+			link.href = `themes/${theme}/${theme}.css`;
+			link.classList.add("theme-css");
 
-        head.appendChild(link);
-        
-        currentTheme = theme;
-	}
+			head.appendChild(link);
+
+			currentTheme = theme;
+		}
+	});
 
 	// const themeClassBefore = document.querySelector(`.theme-${currentTheme}`);
 	// const themeClass = document.querySelector(`.theme-${theme}`);
