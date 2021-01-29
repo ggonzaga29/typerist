@@ -220,7 +220,7 @@ a {
 }
 
 .quote span {
-	transition: color 50ms ease-out;
+	opacity: 0;
 }
 
 .input-group {

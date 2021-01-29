@@ -11,6 +11,7 @@ const themeBtn = document.querySelector(".theme-btn");
 const closeBtn = document.querySelector(".close");
 const footer = document.querySelector(".theme-select");
 const loader = document.querySelector(".lds-dual-ring");
+let spans;
 
 wordInput.focus();
 
@@ -26,7 +27,9 @@ let curMax;
 const testLengths = [10, 25, 50, 75, 100, 125];
 
 const themes = ["default", "253088"];
-let currentTheme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default";
+let currentTheme = localStorage.getItem("theme")
+	? localStorage.getItem("theme")
+	: "default";
 changeTheme(currentTheme);
 
 // Render test lengths selection
@@ -177,7 +180,7 @@ function renderToHTML(arr) {
 	}
 
 	wordElements = wordList.map((word, i) => {
-		return `<span class="word-${i}">${word}</span>`;
+		return `<span class="word-${i} animate__animated">${word}</span>`;
 	});
 
 	wordList.forEach((word) => {
@@ -191,7 +194,24 @@ function renderToHTML(arr) {
 	});
 	wordInput.disabled = false;
 	document.querySelector(`.word-0`).classList.add("text-next");
-	curWord = wordList[currentWord];
+    curWord = wordList[currentWord];
+    spans = document.querySelectorAll('.quote [class*="word-"]');
+    animateQuote();
+    
+}
+
+function animateQuote() {
+
+    let count = 0;
+    const timerAnim = setInterval(() => {
+        if(count < spans.length) {
+            console.log(count);
+            document.querySelector(`.word-${count}`).classList.add("animate__fadeIn");
+            count++;
+        } else {
+            clearInterval(timerAnim);
+        }
+    }, 12) 
 }
 
 let currentWord = 0;
