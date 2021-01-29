@@ -13,6 +13,8 @@ const footer = document.querySelector(".theme-select");
 const loader = document.querySelector(".lds-dual-ring");
 let spans;
 
+document.addEventListener('contextmenu', event => event.preventDefault());
+
 wordInput.focus();
 
 let wordList, wordElements;
@@ -194,24 +196,24 @@ function renderToHTML(arr) {
 	});
 	wordInput.disabled = false;
 	document.querySelector(`.word-0`).classList.add("text-next");
-    curWord = wordList[currentWord];
-    spans = document.querySelectorAll('.quote [class*="word-"]');
-    animateQuote();
-    
+	curWord = wordList[currentWord];
+	spans = document.querySelectorAll('.quote [class*="word-"]');
+	animateQuote();
 }
 
 function animateQuote() {
-
-    let count = 0;
-    const timerAnim = setInterval(() => {
-        if(count < spans.length) {
-            console.log(count);
-            document.querySelector(`.word-${count}`).classList.add("animate__fadeIn");
-            count++;
-        } else {
-            clearInterval(timerAnim);
-        }
-    }, 12) 
+	let count = 0;
+	const timerAnim = setInterval(() => {
+		if (count < spans.length) {
+			console.log(count);
+			document
+				.querySelector(`.word-${count}`)
+				.classList.add("animate__fadeIn");
+			count++;
+		} else {
+			clearInterval(timerAnim);
+		}
+	}, 12);
 }
 
 let currentWord = 0;
