@@ -7,8 +7,9 @@ const wpmText = document.querySelector(".wpm-text");
 const wpmLi = document.querySelector(".wpm-acc");
 const accText = document.querySelector(".acc-text");
 const maxWordSelect = document.querySelector(".max-word-list");
-const themeBtn = document.querySelector('.theme-btn');
-const closeBtn = document.querySelector('.close');
+const themeBtn = document.querySelector(".theme-btn");
+const closeBtn = document.querySelector(".close");
+const footer = document.querySelector(".theme-select");
 
 wordInput.focus();
 
@@ -22,7 +23,10 @@ let maxWords = 50;
 let curMax;
 
 const testLengths = [10, 25, 50, 75, 100, 125];
-const themes = ["default", "250388"];
+
+const themes = ["default", "253088"];
+let currentTheme = themes[0];
+changeTheme(currentTheme);
 
 // Render test lengths selection
 testLengths.forEach((value) => {
@@ -80,17 +84,6 @@ async function getQuote() {
 	return data;
 }
 
-// await function getData() {
-//     const link = sources.get(currentSource);
-
-// 	let response = await fetch(link);
-// 	let data = await response.json();
-// 	return data;
-// }
-
-// hello world
-
-// test function
 async function getEnglishWords() {
 	let response = await fetch("texts/english.json");
 	let data = await response.json();
@@ -122,8 +115,8 @@ function init() {
 	renderText(currentSource);
 	clearInterval(timer);
 	wpmText.textContent = "00";
-    wpmLi.classList.remove("animate__tada");
-    wpmLi.classList.remove("text-next");
+	wpmLi.classList.remove("animate__tada");
+	wpmLi.classList.remove("text-next");
 	accText.textContent = "00";
 
 	timer = null;
@@ -197,7 +190,6 @@ function renderToHTML(arr) {
 	curWord = wordList[currentWord];
 }
 
-// renderQuote();
 let currentWord = 0;
 let correct = 0;
 let curWord;
@@ -214,6 +206,11 @@ document.addEventListener("keypress", (event) => {
 let typed = "";
 
 wordInput.addEventListener("keypress", (event) => {
+	if (testOngoing) {
+		footer.classList.remove("theme-select-open");
+		closeBtn.classList.remove("close-open");
+	}
+
 	!testOngoing ? (testOngoing = true) : (testOngoing = false);
 
 	if (event.key === "Backspace") {
@@ -238,19 +235,6 @@ wordInput.addEventListener("keypress", (event) => {
 
 	const curWordEl = document.querySelector(`.word-${currentWord}`);
 
-	// if (curWord) {
-	// 	let curLetterIndex = 0;
-	// 	let curLetter = curWord[curLetterIndex];
-	// 	typed = typed.concat(event.key);
-
-	// 	if (typed.length > curWord.length) {
-	// 	} else if (typed[typed.length - 1] !== curWord[typed.length - 1]) {
-	// 		wordInput.classList.add("error");
-	// 	} else {
-	// 		wordInput.classList.remove("error");
-	// 	}
-	// }
-
 	if (event.code === "Space") {
 		if (typed.length !== 0) {
 			event.preventDefault();
@@ -258,7 +242,6 @@ wordInput.addEventListener("keypress", (event) => {
 
 			let typedWord = wordInput.value;
 
-			// if (typed.length === wordList[currentWord]) {
 			if (typedWord === wordList[currentWord]) {
 				// Highlight correct words
 				curWordEl.classList.add("text-correct");
@@ -272,7 +255,6 @@ wordInput.addEventListener("keypress", (event) => {
 				wordInput.value = "";
 				uncorrectedErrors.push(typed);
 			}
-			// }
 
 			typed = "";
 
@@ -290,17 +272,19 @@ wordInput.addEventListener("keypress", (event) => {
 				wpmLi.classList.add("animate__tada");
 				wpmLi.classList.add("text-next");
 				accText.textContent = accuracy();
+
+				testOngoing = false;
 			}
 		}
 	}
 });
 
 function netWpm(text, time) {
-	const timeMinutes = time / 60;
+	const timeInMinutes = time / 60;
 	const gross = text.length / 5;
 	const uncorrected = uncorrectedErrors.length;
 
-	return Math.trunc((gross - uncorrected) / timeMinutes);
+	return Math.trunc((gross - uncorrected) / timeInMinutes);
 }
 
 function cpm() {
@@ -308,20 +292,21 @@ function cpm() {
 }
 
 function wpm() {
-	return Math.round(((allLettersTyped.length / 5) / curTime) * 60);
+	const x = allLettersTyped.length / 5;
+
+	return Math.round((x / curTime) * 60);
 }
 
 function accuracy() {
-	return Math.trunc((allWordsStr.length / allLettersTyped.length) * 100);
-}
+	const correctWords = allWordsStr.length;
+	const lettersTyped = allLettersTyped.length;
 
-// Highlight current word
-// function hightlightWord() {
-// 	console.log(`.word-${currentWord}`);
-// 	let el = document.querySelector(`.word-${currentWord}`);
-// 	el.classList.add("text-blue-500");
-// 	currentWord++;
-// }
+	if (lettersTyped < correctWords) {
+		return Math.trunc((lettersTyped / correctWords) * 100);
+	} else {
+		return Math.trunc((correctWords / lettersTyped) * 100);
+	}
+}
 
 // Restart test on tab keypress
 
@@ -379,13 +364,45 @@ setInterval(() => {
 }, 1);
 
 themeBtn.addEventListener("click", () => {
-    const footer = document.querySelector('.theme-select');
-    footer.classList.toggle("theme-select-open")
-    closeBtn.classList.toggle("close-open");
+	footer.classList.toggle("theme-select-open");
+	closeBtn.classList.toggle("close-open");
 });
 
 closeBtn.addEventListener("click", () => {
-    const footer = document.querySelector('.theme-select');
-    footer.classList.remove("theme-select-open")
-    closeBtn.classList.remove("close-open");
+	const footer = document.querySelector(".theme-select");
+	footer.classList.remove("theme-select-open");
+	closeBtn.classList.remove("close-open");
 });
+
+themes.forEach((theme) => {
+	footer.innerHTML += `<div class="img-wrapper theme-${theme}" onclick="changeTheme('${theme}')">
+    <img src="/themes/${theme}/${theme}-pallete.png" alt="" />
+    <span>${theme}</span>
+    </div>`;
+});
+
+function changeTheme(theme) {
+	if (theme !== currentTheme) {
+		document.querySelector(".theme-css").remove();
+
+		const head = document.head;
+		const link = document.createElement("link");
+
+		link.type = "text/css";
+		link.rel = "stylesheet";
+		link.href = `themes/${theme}/${theme}.css`;
+		link.classList.add("theme-css");
+
+        head.appendChild(link);
+        
+        currentTheme = theme;
+	}
+
+	// const themeClassBefore = document.querySelector(`.theme-${currentTheme}`);
+	// const themeClass = document.querySelector(`.theme-${theme}`);
+	// themeClassBefore.classList.remove("current-theme");
+	// themeClass.classList.add("current-theme");
+	// currentTheme = theme;
+}
+
+function changeThemeClasses() {}
