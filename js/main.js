@@ -26,7 +26,7 @@ let curMax;
 const testLengths = [10, 25, 50, 75, 100, 125];
 
 const themes = ["default", "253088"];
-let currentTheme = themes[0];
+let currentTheme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default";
 changeTheme(currentTheme);
 
 // Render test lengths selection
@@ -392,23 +392,24 @@ async function fetchTheme(theme) {
 
 function changeTheme(theme) {
 	fetchTheme(theme).then((data) => {
-        console.log(data);
+		const themeCSS = document.querySelector(".theme-css");
 
-		if (theme !== currentTheme) {
-			document.querySelector(".theme-css").remove();
-
-			const head = document.head;
-			const link = document.createElement("link");
-
-			link.type = "text/css";
-			link.rel = "stylesheet";
-			link.href = data.url;
-			link.classList.add("theme-css");
-
-			head.appendChild(link);
-
-			currentTheme = theme;
+		if (themeCSS) {
+			themeCSS.remove();
 		}
+
+		const head = document.head;
+		const link = document.createElement("link");
+
+		link.type = "text/css";
+		link.rel = "stylesheet";
+		link.href = data.url;
+		link.classList.add("theme-css");
+		localStorage.setItem("theme", theme);
+
+		head.appendChild(link);
+
+		currentTheme = theme;
 	});
 
 	// const themeClassBefore = document.querySelector(`.theme-${currentTheme}`);
