@@ -391,7 +391,9 @@ async function fetchTheme(theme) {
 }
 
 function changeTheme(theme) {
-	fetchTheme(theme).then(() => {
+	fetchTheme(theme).then((data) => {
+        console.log(data);
+
 		if (theme !== currentTheme) {
 			document.querySelector(".theme-css").remove();
 
@@ -400,7 +402,7 @@ function changeTheme(theme) {
 
 			link.type = "text/css";
 			link.rel = "stylesheet";
-			link.href = `themes/${theme}/${theme}.css`;
+			link.href = data.url;
 			link.classList.add("theme-css");
 
 			head.appendChild(link);
