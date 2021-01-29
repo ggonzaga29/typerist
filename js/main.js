@@ -10,6 +10,7 @@ const maxWordSelect = document.querySelector(".max-word-list");
 const themeBtn = document.querySelector(".theme-btn");
 const closeBtn = document.querySelector(".close");
 const footer = document.querySelector(".theme-select");
+const loader = document.querySelector('.lds-dual-ring');
 
 wordInput.focus();
 
@@ -91,6 +92,8 @@ async function getEnglishWords() {
 }
 
 function renderEnglish() {
+    quoteElement.innerHTML = "";
+    loader.classList.add("loader-show");
 	getEnglishWords().then((data) => {
 		let wordArr = data.text;
 
@@ -107,7 +110,8 @@ function renderEnglish() {
 			total++;
 		}
 
-		renderToHTML(finalWordArr);
+        renderToHTML(finalWordArr);
+        loader.classList.remove("loader-show");
 	});
 }
 
